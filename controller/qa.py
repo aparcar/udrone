@@ -54,7 +54,7 @@ def replace_tags(s, c):
         if tag != "$iterate":
             ret = ret.replace(tag, conf.conf[tag[1:]])
         elif c is not None:
-            ret = ret.replace(tag, "%d" % c)
+            ret = ret.replace(tag, f"{c:d}")
 
     return json.loads(ret)
 
@@ -81,14 +81,14 @@ def cmd_drone(v, c):
 
 # this command sleeps for N seconds
 def cmd_sleep(v, c):
-    print("SLEEP %d" % v[1])
+    print(f"SLEEP {v[1]:d}")
     time.sleep(v[1])
 
 
 # this command prints a comment inside the log
 def cmd_comment(v, c):
     com = replace_tags(v[1], c)
-    print("COMMENT %s" % com)
+    print(f"COMMENT {com}")
 
 
 # this command can be prepended to any other command. it simply inverts the result
@@ -110,7 +110,7 @@ def cmd_script(v, c):
     print("SCRIPT " + path + " " + param)
     ret = os.system(path + " " + param)
     if ret:
-        raise ExceptionClass(1000, "script returned %d" % ret, "foo")
+        raise ExceptionClass(1000, f"script returned {ret:d}", "foo")
 
 
 # this is the map of all complex call helpers
@@ -148,7 +148,7 @@ def run_test(test):
     fail = 0
     while loop < max:
         loop = loop + 1
-        print('RUN "' + test["desc"] + '" - iteration %d' % loop)
+        print('RUN "' + test["desc"] + f'" - iteration {loop:d}')
         try:
             # loop over all commands and call them
             for c in test["cmd"]:
@@ -159,10 +159,10 @@ def run_test(test):
         except:
             # increment fail counter
             fail = fail + 1
-            print("FAIL iterate %d" % loop)
+            print(f"FAIL iterate {loop:d}")
             print(sys.exc_info())
     if fail > 0:
-        raise ExceptionClass(1000, "%d iterations failed" % fail, "foo")
+        raise ExceptionClass(1000, f"{fail:d} iterations failed", "foo")
 
 
 if len(sys.argv) < 2:
@@ -193,8 +193,8 @@ try:
             board = l[1]
         d = 0
         while d < count:
-            print("DRONE init unit %d" % drone_count)
-            drone.append(host.Group("Drone%d" % drone_count))
+            print(f"DRONE init unit {drone_count:d}")
+            drone.append(host.Group(f"Drone{drone_count:d}"))
             drone[drone_count].assign(1, board=board)
             d = d + 1
             drone_count = drone_count + 1
@@ -211,18 +211,18 @@ for t in test["test"]:
     count = count + 1
     try:
         run_test(t)
-        print("PASS %d " % count + test["id"])
+        print(f"PASS {count:d} " + test["id"])
         success = success + 1
         if t["sleep"]:
-            print("SLEEP %d" % t["sleep"])
+            print(f"SLEEP {t['sleep']:d}")
             time.sleep(t["sleep"])
     except:
-        print("FAIL exception running %d " % count + test["id"])
+        print(f"FAIL exception running {count:d} " + test["id"])
         print(sys.exc_info())
         time.sleep(5)
 d = 0
 while d < drone_count:
-    print("DRONE reset unit %d" % d)
+    print(f"DRONE reset unit {d:d}")
     cmd_drone(["DRONE", d, "!reset"], 1)
     d = d + 1
 
@@ -230,6 +230,6 @@ result = "FAIL"
 if success == len(test["test"]):
     result = "PASS"
 
-print("RESULT " + result + " %d/%d" % (success, len(test["test"])))
+print("RESULT " + result + f" {success:d}/{len(test['test']):d}")
 
 exit(0)

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-udrone - Multicast Device Remote Control 
+udrone - Multicast Device Remote Control
 Copyright (C) 2010 Steven Barth <steven@midlink.org>
 Copyright (C) 2010-2019 John Crispin <john@phrozen.org>
 
@@ -19,6 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """
 from __future__ import print_function
+import logging
 
 del print_function
 
@@ -43,9 +44,6 @@ class DroneRuntimeError(EnvironmentError):
 
 class DroneConflict(EnvironmentError):
     pass
-
-
-import logging
 
 
 class NullHandler(logging.Handler):
@@ -167,7 +165,7 @@ class DroneGroup(object):
             for drone, ans in answers.iteritems():
                 if ans and ans["type"] == "accept":
                     answers[drone] = None  # In Progress
-                elif drone in pending and ans != None:
+                elif drone in pending and ans is not None:
                     pending.remove(drone)
             now = time.time()
             self._timer_setup()
@@ -182,7 +180,7 @@ class DroneGroup(object):
         for drone, answer in res.iteritems():
             if not answer:  # Some drone didn't answer
                 raise DroneNotReachableError((ETIMEDOUT, "Request Timeout", [drone]))
-            if not drone in self.members:  # Some unknown drone answered
+            if drone not in self.members:  # Some unknown drone answered
                 raise DroneConflict([drone])
             if answer["type"] == "unsupported":
                 raise DroneRuntimeError((EOPNOTSUPP, "Unknown Command", drone))
@@ -202,7 +200,10 @@ class DroneGroup(object):
 
 class DroneHost(object):
     def __init__(self, local=None, args=[]):
-        import socket, select, os, binascii
+        import binascii
+        import os
+        import select
+        import socket
 
         self.args = args
         self.hostid = binascii.hexlify(os.urandom(3))
@@ -226,7 +227,8 @@ class DroneHost(object):
         logger.info("Initialized host with ID: " + self.uniqueid)
 
     def genseq(self):
-        import struct, os
+        import os
+        import struct
 
         return struct.unpack("=I", os.urandom(4))[0] % 2000000000
 
@@ -234,14 +236,15 @@ class DroneHost(object):
         import json
 
         msg = {"from": self.uniqueid, "to": to, "type": type, "seq": seq}
-        if data != None:
+        if data is not None:
             msg["data"] = data
         packet = json.dumps(msg, separators=(",", ":"))
         logger.debug("Sending: %s", packet)
         self.socket.sendto(packet, self.addr)
 
     def recv(self, seq, type=None):
-        import socket, json
+        import json
+        import socket
         from errno import EWOULDBLOCK
 
         while True:
@@ -274,14 +277,14 @@ class DroneHost(object):
         while (
             (now - start) >= 0
             and (now - start) < timeout
-            and (expect == None or len(expect) > 0)
+            and (expect is None or len(expect) > 0)
         ):
             self.poll.poll((timeout - (now - start)) * 1000)
             while True:
                 msg = self.recv(seq, type)
                 if msg:
                     answers[msg["from"]] = msg
-                    if expect != None and msg["from"] in expect:
+                    if expect is not None and msg["from"] in expect:
                         expect.remove(msg["from"])
                 elif not msg:
                     break
@@ -294,7 +297,7 @@ class DroneHost(object):
         for timeout in self.resent:
             self.send(to, seq, type, data)
             self.recv_until(answers, seq, resptype, timeout, expect)
-            if expect != None and len(expect) == 0:
+            if expect is not None and len(expect) == 0:
                 break
         return answers
 
@@ -312,7 +315,7 @@ class DroneHost(object):
 
     def whois(self, group, need=None, seq=None, board=None):
         answers = {}
-        if seq == None:
+        if seq is None:
             seq = self.genseq()
         for timeout in self.resent:
             data = None

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-udrone - Multicast Device Remote Control 
+udrone - Multicast Device Remote Control
 Copyright (C) 2010 Steven Barth <steven@midlink.org>
 Copyright (C) 2010-2019 John Crispin <john@phrozen.org>
 
@@ -18,18 +18,19 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """
-import json
-import time
-import signal
-import os
-import sys
 import conf
-
-import socket
 import fcntl
-import struct
-
+import json
+import os
 import re
+import socket
+import struct
+import sys
+import time
+
+# bring up drone host
+from udrone import DroneHost
+
 
 # netlink helper for reading a netdevs ip
 def get_ip_address(ifname):
@@ -41,15 +42,13 @@ def get_ip_address(ifname):
     )
 
 
-# bring up drone host
-from udrone import DroneHost
-
 host = DroneHost(get_ip_address(conf.conf["ifname"]))
 drone = []
 
+
 # this function replaces values inside parameters based on conf.py
 def replace_tags(s, c):
-    m = re.compile("(\$\w+)")
+    m = re.compile(r"(\$\w+)")
     ret = json.dumps(s)
     for tag in re.findall(m, ret):
         if tag != "$iterate":

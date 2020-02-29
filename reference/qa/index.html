@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Qa - udrone</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">udrone</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">udrone - QA done right</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">Qa</a>
+</li>
+                                    
+<li >
+    <a href="../udronerc/">Udronerc</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../..">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../udronerc/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#udronerc.qa.cmd_comment">cmd_comment()</a></li>
+        <li class="main "><a href="#udronerc.qa.cmd_sleep">cmd_sleep()</a></li>
+        <li class="main "><a href="#udronerc.qa.online_drones">online_drones()</a></li>
+        <li class="main "><a href="#udronerc.qa.replace_tags">replace_tags()</a></li>
+        <li class="main "><a href="#udronerc.qa.run_task_drone">run_task_drone()</a></li>
+        <li class="main "><a href="#udronerc.qa.run_task_local">run_task_local()</a></li>
+        <li class="main "><a href="#udronerc.qa.run_test">run_test()</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="udronerc.qa.cmd_comment"><code class="codehilite language-python">cmd_comment(args, counter)</code><a class="headerlink" href="#udronerc.qa.cmd_comment" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def cmd_comment(args, counter):
+    """
+    Print comment inside the log
+
+    Args:
+        args (dict): must contain msg which will be logger.debuged
+        counter (int): current interation in loop
+    """
+    comment = replace_tags(args["msg"], counter)
+    logger.debug(f"COMMENT {comment}")
+</code></pre>
+
+</details>
+<p>Print comment inside the log</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>args</code></td>
+<td><code>_empty</code></td>
+<td>must contain msg which will be logger.debuged</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>counter</code></td>
+<td><code>_empty</code></td>
+<td>current interation in loop</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="udronerc.qa.cmd_sleep"><code class="codehilite language-python">cmd_sleep(v, c)</code><a class="headerlink" href="#udronerc.qa.cmd_sleep" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def cmd_sleep(v, c):
+    """
+    Sleep for N seconds
+
+    Args:
+        v: seconds to sleep
+        c: unused
+    """
+    logger.debug(f"SLEEP {v[1]:d}")
+    time.sleep(v[1])
+</code></pre>
+
+</details>
+<p>Sleep for N seconds</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td><code>_empty</code></td>
+<td>seconds to sleep</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td><code>_empty</code></td>
+<td>unused</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="udronerc.qa.online_drones"><code class="codehilite language-python">online_drones()</code><a class="headerlink" href="#udronerc.qa.online_drones" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def online_drones():
+    """Prints list of currently online drones"""
+    online = host.whois("!all-default")
+    logger.debug((online))
+    if not online:
+        logger.debug("No drones found!")
+    else:
+        logger.debug(f"Online drones: {len(online)}")
+        for drone in online.values():
+            logger.debug(drone)
+            data = drone["data"]
+            logger.debug(f"Drone {drone['from']} ({data['board']}) is online ")
+</code></pre>
+
+</details>
+<p>Prints list of currently online drones</p>
+<h2 id="udronerc.qa.replace_tags"><code class="codehilite language-python">replace_tags(msg, data)</code><a class="headerlink" href="#udronerc.qa.replace_tags" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def replace_tags(msg: str, data: dict):
+    """Replaces values inside parameters based on conf.py
+
+    Args:
+      msg (str): Message containing tags
+      data (dict): Mapping for tags
+    """
+    return msg.format(*data)
+</code></pre>
+
+</details>
+<p>Replaces values inside parameters based on conf.py</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>msg (str): Message containing tags
+  data (dict): Mapping for tags</p>
+<h2 id="udronerc.qa.run_task_drone"><code class="codehilite language-python">run_task_drone(task)</code><a class="headerlink" href="#udronerc.qa.run_task_drone" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def run_task_drone(task):
+    """
+    Run a task remotely on udrone
+
+    Args:
+        task (dict): Task to run on drone
+    """
+    task_id, task_data = validate_task(task, cmds_drone)
+
+    # TODO validate task args
+
+    # per default we wait 10s for a reply
+    timeout = 10
+    # if a timeout value was passed, use it instead of the default
+    if len(v) == 5:
+        timeout = v[4]
+    # check if the call has a payload
+    if len(v) &lt; 4:
+        # no payload so do a flat call
+        logger.debug('DRONE calling "' + v[2] + '"')
+        return drone[v[1] - 1].call(v[2])
+    else:
+        # there is a payload, substitue global vars and iteration coutners
+        payload = replace_tags(v[3], c)
+        # issue the actual command
+        logger.debug('DRONE calling "' + v[2] + '":' + json.dumps(payload))
+        return drone[v[1] - 1].call(v[2], payload, task.get("timeout", 10))
+
+    return cmd_drone
+</code></pre>
+
+</details>
+<p>Run a task remotely on udrone</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task</code></td>
+<td><code>_empty</code></td>
+<td>Task to run on drone</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="udronerc.qa.run_task_local"><code class="codehilite language-python">run_task_local(task)</code><a class="headerlink" href="#udronerc.qa.run_task_local" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def run_task_local(task):
+    """
+    Run a task locally on the udrone host
+
+    Args:
+        task (dict): Task to run locally
+    """
+    task_id, task_data = validate_task(task, cmd_local_map.keys())
+
+    return cmd_local_map[task_id](task_data)
+</code></pre>
+
+</details>
+<p>Run a task locally on the udrone host</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>task</code></td>
+<td><code>_empty</code></td>
+<td>Task to run locally</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="udronerc.qa.run_test"><code class="codehilite language-python">run_test(test)</code><a class="headerlink" href="#udronerc.qa.run_test" title="Permanent link">&para;</a></h2>
+<details class="note"><summary>Show source code in /udronerc/qa.py</summary><pre class="codehilite"><code class="language-python linenums">def run_test(test):
+    """
+    Run a actual test
+
+    Args:
+        test (test): the test to run
+    """
+    max = 1
+    loop = 0
+
+    # we can iterate  0-&gt;max
+    try:
+        if test["repeat"] is not None:
+            max = test["repeat"]
+    except:
+        max = 1
+
+    # or we iterate 0/first -&gt; last
+    try:
+        if test["last"] is not None:
+            max = test["last"]
+        if test["first"] is not None:
+            loop = test["first"]
+            loop = loop - 1
+    except:
+        loop = 0
+
+    # do $max iterations of the test set
+    fail = 0
+    while loop &lt; max:
+        loop = loop + 1
+        logger.debug('RUN "' + test["desc"] + f'" - iteration {loop:d}')
+        try:
+            # loop over all commands and call them
+            for task in test["tasks"]:
+                if task.get("local", False):
+                    res = run_task_local(task)
+                else:
+                    res = run_task_drone(task)
+                res = cmd_map[task[0]](task, loop)
+        except KeyboardInterrupt as e:
+            # ctrl-C was hit
+            exit(-1)
+        except:
+            # increment fail counter
+            fail = fail + 1
+            logger.debug(f"FAIL iterate {loop:d}")
+            logger.debug(sys.exc_info())
+    if fail &gt; 0:
+        raise ExceptionClass(1000, f"{fail:d} iterations failed", "foo")
+</code></pre>
+
+</details>
+<p>Run a actual test</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test</code></td>
+<td><code>_empty</code></td>
+<td>the test to run</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

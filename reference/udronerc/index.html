@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Udronerc - udrone</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">udrone</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">udrone - QA done right</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../qa/">Qa</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">Udronerc</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../qa/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="disabled">
+                                <a rel="prev" >
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#udronerc.udronerc.DroneGroup">DroneGroup</a></li>
+            <li><a href="#udronerc.udronerc.DroneGroup.assign">assign()</a></li>
+        <li class="main "><a href="#udronerc.udronerc.DroneHost">DroneHost</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.call">call()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.call_multi">call_multi()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.genseq">genseq()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.get_ip_address">get_ip_address()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.recv">recv()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.recv_until">recv_until()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.send">send()</a></li>
+            <li><a href="#udronerc.udronerc.DroneHost.whois">whois()</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="udronerc.udronerc.DroneGroup"><code class="codehilite language-python">DroneGroup</code><a class="headerlink" href="#udronerc.udronerc.DroneGroup" title="Permanent link">&para;</a></h2>
+<p>Fjadsfkjadsf</p>
+<h3 id="udronerc.udronerc.DroneGroup.assign"><code class="codehilite language-python">assign(self, max_nodes, min_nodes=None, board=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneGroup.assign" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def assign(self, max_nodes: int, min_nodes: int = None, board: str = None) -&gt; list:
+        """
+        Assign nodes to group
+
+        Args:
+            max_nodes (int): maximal number of nodes required
+            min_nodes (int): mimimal number of nodes required
+            board (str): limit assignment to specific board
+
+        Returns:
+            list: new member os group
+        """
+
+        if not min_nodes:
+            min_nodes = max_nodes if max_nodes else 1
+        available = self.host.whois(
+            UDRONE_GROUP_DEFAULT, max_nodes, board=board
+        ).keys()[:max_nodes]
+
+        if len(available) &lt; min_nodes:
+            raise DroneNotFoundError((ENOENT, "You must construct additional drones"))
+        new_members = self.engage(available)
+
+        if len(new_members) &lt; min_nodes:
+            max_nodes -= len(new_members)
+            available = self.host.whois(UDRONE_GROUP_DEFAULT, max_nodes).keys()[
+                :max_nodes
+            ]
+            new_members += self.engage(available)
+
+        if len(new_members) &lt; min_nodes:
+            if len(new_members) &gt; 0:  # Rollback
+                self.host.call_multi(new_members, None, "!reset", None, "status")
+            raise DroneNotFoundError((ENOENT, "You must construct additional drones"))
+
+        return new_members
+</code></pre>
+
+</details>
+<p>Assign nodes to group</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_nodes</code></td>
+<td><code>int</code></td>
+<td>maximal number of nodes required</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>min_nodes</code></td>
+<td><code>int</code></td>
+<td>mimimal number of nodes required</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>board</code></td>
+<td><code>str</code></td>
+<td>limit assignment to specific board</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list</code></td>
+<td>list: new member os group</td>
+</tr>
+</tbody>
+</table>
+<h2 id="udronerc.udronerc.DroneHost"><code class="codehilite language-python">DroneHost</code><a class="headerlink" href="#udronerc.udronerc.DroneHost" title="Permanent link">&para;</a></h2>
+<h3 id="udronerc.udronerc.DroneHost.call"><code class="codehilite language-python">call(self, to, seq, msg_type, data=None, resp_type=None, expect=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.call" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def call(
+        self,
+        to: str,
+        seq: int,
+        msg_type: str,
+        data: dict = None,
+        resp_type: str = None,
+        expect: list = None,
+    ) -&gt; dict:
+        """
+        Send data to drone and receive response
+
+        Args:
+            to (str): selected group
+            seq (int): sequence number
+            msg_type (str): send message of type
+            data (dict): data to send to group
+            resp_type (str): receive message of type
+            expect (list): list of drones expected to anser
+
+        Returns:
+            dict: received message from drones
+        """
+
+        if not seq:
+            seq = self.genseq()
+
+        answers = {}
+
+        for timeout in self.resent_strategy:
+            self.send(to, seq, msg_type, data)
+            self.recv_until(answers, seq, resp_type, timeout, expect)
+            if expect is not None and len(expect) == 0:
+                break
+        return answers
+</code></pre>
+
+</details>
+<p>Send data to drone and receive response</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>to</code></td>
+<td><code>str</code></td>
+<td>selected group</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>seq</code></td>
+<td><code>int</code></td>
+<td>sequence number</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>msg_type</code></td>
+<td><code>str</code></td>
+<td>send message of type</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>dict</code></td>
+<td>data to send to group</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>resp_type</code></td>
+<td><code>str</code></td>
+<td>receive message of type</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>expect</code></td>
+<td><code>list</code></td>
+<td>list of drones expected to anser</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dict</code></td>
+<td>dict: received message from drones</td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.call_multi"><code class="codehilite language-python">call_multi(self, nodes, seq, msg_type, data=None, resp_type=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.call_multi" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def call_multi(
+        self,
+        nodes: list,
+        seq: int,
+        msg_type: str,
+        data: dict = None,
+        resp_type: str = None,
+    ) -&gt; dict:
+        """
+        Send data to multiple drones and receive responses
+
+        Args:
+            nodes (list): selected drones
+            seq (int): sequence number
+            msg_type (str): send message of type
+            data (dict): data to send to group
+            resp_type (str): receive message of type
+
+        Returns:
+            dict: received message from drones
+        """
+
+        if not seq:
+            seq = self.genseq()
+
+        answers = {}
+
+        for timeout in self.resent_strategy:
+            for node in nodes:
+                self.send(node, seq, msg_type, data)
+            self.recv_until(answers, seq, resp_type, timeout, nodes)
+            if len(nodes) == 0:
+                break
+        return answers
+</code></pre>
+
+</details>
+<p>Send data to multiple drones and receive responses</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nodes</code></td>
+<td><code>list</code></td>
+<td>selected drones</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>seq</code></td>
+<td><code>int</code></td>
+<td>sequence number</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>msg_type</code></td>
+<td><code>str</code></td>
+<td>send message of type</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>dict</code></td>
+<td>data to send to group</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>resp_type</code></td>
+<td><code>str</code></td>
+<td>receive message of type</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dict</code></td>
+<td>dict: received message from drones</td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.genseq"><code class="codehilite language-python">genseq(self)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.genseq" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def genseq(self) -&gt; int:
+        """
+        Generate random sequence number
+
+        Returns:
+            int: generated sequence
+        """
+        return struct.unpack("=I", os.urandom(4))[0] % 2000000000
+</code></pre>
+
+</details>
+<p>Generate random sequence number</p>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>int: generated sequence</td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.get_ip_address"><code class="codehilite language-python">get_ip_address(self, interface)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.get_ip_address" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def get_ip_address(self, interface: str) -&gt; str:
+        """
+        Get IP of a local interface
+
+        Args:
+            interface (str): name of local interface
+
+        Returns:
+            str: IP address of interface
+        """
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        return socket.inet_ntoa(
+            fcntl.ioctl(
+                s.fileno(),
+                0x8915,
+                struct.pack("256s", interface[:15].encode("utf-8")),  # SIOCGIFADDR
+            )[20:24]
+        )
+</code></pre>
+
+</details>
+<p>Get IP of a local interface</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>interface</code></td>
+<td><code>str</code></td>
+<td>name of local interface</td>
+<td><em>required</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>str</code></td>
+<td>str: IP address of interface</td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.recv"><code class="codehilite language-python">recv(self, seq, msg_type=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.recv" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def recv(self, seq: int, msg_type: str = None) -&gt; dict:
+        """
+        Recevie messages from drones
+
+        Args:
+            seq (int): sequence number
+            msg_type (str): type of message to receive
+
+        Returns:
+            dict: received message from drone
+        """
+        while True:
+            try:
+                msg = json.loads(self.socket.recv(self.maxsize))
+                if (
+                    msg["from"]
+                    and msg["type"]
+                    and msg["to"] == self.uniqueid
+                    and (not msg_type or msg["type"] == msg_type)
+                    and (not seq or msg["seq"] == seq)
+                ):
+                    logger.debug("Received: %s", str(msg))
+                    return msg
+            except Exception as e:
+                if isinstance(e, socket.error) and e.errno == EWOULDBLOCK:
+                    return None
+</code></pre>
+
+</details>
+<p>Recevie messages from drones</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seq</code></td>
+<td><code>int</code></td>
+<td>sequence number</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>msg_type</code></td>
+<td><code>str</code></td>
+<td>type of message to receive</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dict</code></td>
+<td>dict: received message from drone</td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.recv_until"><code class="codehilite language-python">recv_until(self, answers, seq, msg_type=None, timeout=1, expect=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.recv_until" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def recv_until(
+        self,
+        answers: dict,
+        seq: int,
+        msg_type: str = None,
+        timeout: int = 1,
+        expect: list = None,
+    ):
+        """
+        Recevie messages from drones until requirement is fulfilled
+
+        Args:
+            answers (dict): Empty dict to be filled with received answers
+            seq (int): sequence number
+            msg_type (str): type of message to receive
+            timeout (int): number of seconds before receiving timeouts
+            expect (list): list of drones expected to anser
+        """
+
+        logger.debug(
+            "Receiving replies for seq %i for %.1f secs expecting %s",
+            seq,
+            timeout,
+            expect,
+        )
+        start = time.time()
+        now = start
+        while (
+            (now - start) &gt;= 0
+            and (now - start) &lt; timeout
+            and (expect is None or len(expect) &gt; 0)
+        ):
+            self.poll.poll((timeout - (now - start)) * 1000)
+            while True:
+                msg = self.recv(seq, msg_type)
+                if msg:
+                    answers[msg["from"]] = msg
+                    if expect is not None and msg["from"] in expect:
+                        expect.remove(msg["from"])
+                elif not msg:
+                    break
+            now = time.time()
+</code></pre>
+
+</details>
+<p>Recevie messages from drones until requirement is fulfilled</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>answers</code></td>
+<td><code>dict</code></td>
+<td>Empty dict to be filled with received answers</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>seq</code></td>
+<td><code>int</code></td>
+<td>sequence number</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>msg_type</code></td>
+<td><code>str</code></td>
+<td>type of message to receive</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td><code>int</code></td>
+<td>number of seconds before receiving timeouts</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>expect</code></td>
+<td><code>list</code></td>
+<td>list of drones expected to anser</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.send"><code class="codehilite language-python">send(self, to, seq, msg_type, data=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.send" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def send(self, to: str, seq: int, msg_type: str, data: dict = None):
+        """
+        Send message to drone
+
+        Args:
+            to (str): receiving group
+            seq (int): sequence number
+            msg_type (str): type of message to receive
+            data (dict): data to send to node
+        """
+        msg = {"from": self.uniqueid, "to": to, "type": msg_type, "seq": seq}
+        if data is not None:
+            msg["data"] = data
+        packet = json.dumps(msg, separators=(",", ":"))
+        logger.debug(f"Sending: {packet}")
+        self.socket.sendto(packet.encode("utf-8"), self.addr)
+</code></pre>
+
+</details>
+<p>Send message to drone</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>to</code></td>
+<td><code>str</code></td>
+<td>receiving group</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>seq</code></td>
+<td><code>int</code></td>
+<td>sequence number</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>msg_type</code></td>
+<td><code>str</code></td>
+<td>type of message to receive</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>dict</code></td>
+<td>data to send to node</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="udronerc.udronerc.DroneHost.whois"><code class="codehilite language-python">whois(self, group, need=None, seq=None, board=None)</code><a class="headerlink" href="#udronerc.udronerc.DroneHost.whois" title="Permanent link">&para;</a></h3>
+<details class="note"><summary>Show source code in /udronerc/udronerc.py</summary><pre class="codehilite"><code class="language-python linenums">    def whois(
+        self, group: str, need: int = None, seq: int = None, board: str = None
+    ) -&gt; dict:
+        """
+        Return online drones
+
+        Args:
+            group (str): limit request to specific group
+            need (int): minimum number of ansers
+            seq (int): sequence number
+            board (str): limit request to specific board
+
+        Returns:
+            dict: received answers of boards
+        """
+        answers = {}
+        if seq is None:
+            seq = self.genseq()
+        for timeout in self.resent_strategy:
+            data = {}
+            if board:
+                data["board"] = board
+
+            self.send(group, seq, "!whois", data)
+            if need == 0:
+                break
+            self.recv_until(answers, seq, "status", timeout)
+            if need and len(answers) &gt;= need:
+                break
+
+        return answers
+</code></pre>
+
+</details>
+<p>Return online drones</p>
+<p><strong>Parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>group</code></td>
+<td><code>str</code></td>
+<td>limit request to specific group</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>need</code></td>
+<td><code>int</code></td>
+<td>minimum number of ansers</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>seq</code></td>
+<td><code>int</code></td>
+<td>sequence number</td>
+<td><code>None</code></td>
+</tr>
+<tr>
+<td><code>board</code></td>
+<td><code>str</code></td>
+<td>limit request to specific board</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dict</code></td>
+<td>dict: received answers of boards</td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

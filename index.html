@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>udrone</title>
+        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href=".">udrone</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href=".">udrone - QA done right</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="reference/qa/">Qa</a>
+</li>
+                                    
+<li >
+    <a href="reference/udronerc/">Udronerc</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="disabled">
+                                <a rel="next" >
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="reference/qa/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#udrone-qa-done-right">udrone - QA done right</a></li>
+            <li><a href="#what-is-udrone">What is udrone</a></li>
+            <li><a href="#setup-guide">Setup Guide</a></li>
+            <li><a href="#how-do-i-run-a-test">How do I run a test</a></li>
+            <li><a href="#definition-of-test-cases">Definition of test cases</a></li>
+            <li><a href="#using-iterations-and-substitution">Using iterations and substitution</a></li>
+            <li><a href="#list-of-all-complex-calls">List of all complex calls</a></li>
+            <li><a href="#list-of-all-drone-calls">List of all drone calls</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="udrone-qa-done-right">udrone - QA done right<a class="headerlink" href="#udrone-qa-done-right" title="Permanent link">&para;</a></h1>
+<ul>
+<li>What is udrone</li>
+<li>Definition of test cases</li>
+<li>Using iterations and substitution</li>
+<li>List of all complex calls</li>
+<li>List of all drone calls</li>
+</ul>
+<h2 id="what-is-udrone">What is udrone<a class="headerlink" href="#what-is-udrone" title="Permanent link">&para;</a></h2>
+<p>Udrone is a system that allows you to remotely control <em>N</em> drones. The <em>N</em>
+drones can be sent a number of different commands. Based on these commands the
+drone will perform a number of actions and report the result back to the drone
+host controller. The system consists of a number of files on the controller
+side.</p>
+<ul>
+<li><code>udrone.py</code> - the core component. This code establishes a communication channel to the drone.</li>
+<li><code>qa.py</code> - this is a wrapper for udrone.py that allows us to write test in json syntax and run them in a sane manner</li>
+<li><code>*.json</code> - this is a collection of predefined tests, that the drone can run</li>
+</ul>
+<h2 id="setup-guide">Setup Guide<a class="headerlink" href="#setup-guide" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Where do I get udrone</li>
+<li>How do I setup udrone software</li>
+<li>How do I setup udrone hardware</li>
+<li>How do I run a test</li>
+</ul>
+<h3 id="where-do-i-get-udrone">Where do I get udrone<a class="headerlink" href="#where-do-i-get-udrone" title="Permanent link">&para;</a></h3>
+<p>Checkout the latest version via the following command</p>
+<pre class="codehilite"><code>git clone https://github.com/blogic/udrone</code></pre>
+
+
+<h3 id="how-do-i-setup-udrone-software">How do I setup udrone software<a class="headerlink" href="#how-do-i-setup-udrone-software" title="Permanent link">&para;</a></h3>
+<p>udrone is very easy to setup. All custom information is stored in a central
+file called conf.py</p>
+<pre class="codehilite"><code>$ cat conf.py
+conf = {
+    # the interface used to talk to the drones
+    ifname&quot;:&quot;eth0&quot;,
+}</code></pre>
+
+
+<h3 id="how-do-i-setup-udrone-hardware">How do I setup udrone hardware<a class="headerlink" href="#how-do-i-setup-udrone-hardware" title="Permanent link">&para;</a></h3>
+<p>In addition to the DUT you will need N drones. A drone is a OpenWrt router with
+the udrone package installed. Once you have all devices, you need to set them
+up in 1 of the following ways.</p>
+<pre class="codehilite"><code>LAPTOP (eth0) -&gt; (LAN) DRONE (WAN) -&gt; (LAN) DUT (WAN) -&gt; BACKEND
+LAPTOP (eth0) -&gt; (LAN) DRONE (WIFI) -&gt; (WIFI) DUT (WAN) -&gt; BACKEND</code></pre>
+
+
+<p>If you want to use more than just 1 Drone you will need to switches between
+LAPTOP/DRONE and DRONE/DUT.</p>
+<p>As a backend you will need, depending on the test: AP/PPPoE Server/DHCP/DNS/...</p>
+<h2 id="how-do-i-run-a-test">How do I run a test<a class="headerlink" href="#how-do-i-run-a-test" title="Permanent link">&para;</a></h2>
+<p>The simplest test is the connectivity test. This will make the drone grab an
+IPV4 using DHCP from the DUT and wget <a href="http://openwrt.org/index.html">http://openwrt.org/index.html</a>.</p>
+<pre class="codehilite"><code>$ ./qa.py test/example.connectivity.json</code></pre>
+
+
+<p>Once all test are run, the qa tool will report back if the test passed or
+failed.</p>
+<h2 id="definition-of-test-cases">Definition of test cases<a class="headerlink" href="#definition-of-test-cases" title="Permanent link">&para;</a></h2>
+<p>So, lets start by looking at the format of the json file. The basic layout of
+any json based test description is as follows</p>
+<pre class="codehilite"><code>{
+    &quot;id&quot;:&quot;The ID of the test&quot;,
+    &quot;desc&quot;:&quot;The description of the test&quot;,
+    &quot;drones&quot;:the_number_of_drones,
+    &quot;test&quot;:[ the actual test case go here ],
+}</code></pre>
+
+
+<p>Within the test:[] entity we will start to define all the different test cases
+that want to run as part of this test. A typical testcase would look like this</p>
+<pre class="codehilite"><code>{
+    &quot;desc&quot;:&quot;use fatserver calls to set public_essid)&quot;,
+    &quot;repeat&quot;:how_often_we_want_to_run_the_test,
+    &quot;first&quot;:loop_from_first,
+    &quot;last&quot;:loop_to_last,
+    &quot;sleep&quot;:how_many_seconds_to_sleep_after_the_test,
+    &quot;cmd&quot;:[ the actual commands to be called go here ],
+}</code></pre>
+
+
+<p>If last/first is set, repeat will be ignored.</p>
+<p>Within the cmd:[] entity we define the actual real commands that we want the
+drone to execute as part of the test. Consider these to be a reduced to the
+smallest denominator of commands called (or in other terms, these are risc
+commands and not cisc). The command can have a verity of functions, from
+setting local and remote network settings, doing a generic sleep, talking to
+the DUT, doing random networkery, ...</p>
+<p>Lets start by looking at a single row</p>
+<pre class="codehilite"><code>[ &quot;ACTION&quot;, .................. ]</code></pre>
+
+
+<p>Every line start with a ACTION. Depending on the real ACTION to take, we can
+have N parameters following the ACTON call.</p>
+<p>Actions can be of 3 types. So lets look at 3 lines</p>
+<pre class="codehilite"><code>{
+    [ &quot;sleep&quot;, 5 ],
+    [ &quot;drone&quot;, 1, &quot;webui_auth&quot;, {&quot;pass&quot;:&quot;foobar&quot;}, 300 ],
+    [ &quot;essid&quot;, 1, &quot;foorandom&quot;, &quot;12345321234&quot; ],
+}</code></pre>
+
+
+<ul>
+<li>
+<p>sleep - sleep</p>
+<pre class="codehilite"><code># this makes the system wait 5 seconds
+[ &quot;sleep&quot;, 5 ]</code></pre>
+
+
+</li>
+<li>
+<p>drone - send commands to drone</p>
+</li>
+</ul>
+<hr />
+<pre class="codehilite"><code>    # we want to send a command to a drone, whose id is 1, the commands id is
+    # "webui_auth" and we pass the payload {"pass":"foobar"}. if the call fails
+    # to return within 300s, we raise a failure/exception
+    [ "drone", 1, "webui_auth", {"pass":"foobar"}, 300 ],
+</code></pre>
+
+<ul>
+<li>$complex - when ACTIONS become to complex to be handled by the "drone" call,
+    we can add additional handlers inside qa.py to abstract the complexion away
+    abit.<pre class="codehilite"><code># run the complex command essid. this sets the essid of drone 1 to
+# foorandom and uses 12345321234 as a passphrase this call is complex as we
+# don't only send a command, but 2 and then poll for their completion.
+# Completion is detected by polling the network status reporting info from
+# the DUT
+[ &quot;essid&quot;, 1, &quot;foorandom&quot;, &quot;12345321234&quot; ]</code></pre>
+
+
+</li>
+</ul>
+<p>All complex functions are located inside qa.py</p>
+<p>A full test would look like this:</p>
+<pre class="codehilite"><code>{
+    &quot;id&quot;:&quot;test123&quot;,
+    &quot;desc&quot;:&quot;A demo testcase.&quot;,
+    &quot;drones&quot;:1,
+    &quot;test&quot;:
+    [
+        {
+            &quot;desc&quot;:&quot;log into webui and set essid&quot;,
+            &quot;repeat&quot;:1,
+            &quot;sleep&quot;:1,
+            &quot;cmd&quot;:
+            [
+                {
+                    [ &quot;sleep&quot;, 5 ],
+                    [ &quot;drone&quot;, 1, &quot;webui_auth&quot;, {&quot;pass&quot;:&quot;foobar&quot;}, 300 ],
+                    [ &quot;essid&quot;, 1, &quot;foorandom&quot;, &quot;12345321234&quot; ],
+                }
+            ],
+        },
+    ],
+}</code></pre>
+
+
+<h2 id="using-iterations-and-substitution">Using iterations and substitution<a class="headerlink" href="#using-iterations-and-substitution" title="Permanent link">&para;</a></h2>
+<p>As described above a test set can be repeated N times (repeat: 4). To reflect
+the N iterations within the test we can use variable substitution. To do so,
+simply place <code>$iterate</code> inside any parameter section and it will get magically
+replaced by the backend. A simple iteration example would look like this.</p>
+<pre class="codehilite"><code>{
+    &quot;id&quot;:&quot;example.iterate&quot;,
+    &quot;desc&quot;:&quot;Demo of how iterate works&quot;,
+    &quot;drones&quot;:1,
+    &quot;test&quot;:[
+        {&quot;desc&quot;:&quot;repeat example&quot;,
+        &quot;repeat&quot;:4,
+        &quot;sleep&quot;:2,
+        &quot;cmd&quot;:[ [ &quot;comment&quot;, &quot;Iteration $iterate&quot; ] ]
+        }
+    ]
+}
+
+
+--&gt;
+RUN &quot;iterate&quot; - iteration 1
+COMMENT Iteration 1
+RUN &quot;iterate&quot; - iteration 2
+COMMENT Iteration 2
+RUN &quot;iterate&quot; - iteration 3
+COMMENT Iteration 3
+RUN &quot;iterate&quot; - iteration 4
+COMMENT Iteration 4
+
+{
+    &quot;id&quot;:&quot;example.iterate&quot;,
+    &quot;desc&quot;:&quot;Demo of how iterate works&quot;,
+    &quot;drones&quot;:1,
+    &quot;test&quot;:[
+        {&quot;desc&quot;:&quot;first-&gt;last example&quot;,
+        &quot;first&quot;:4,
+        &quot;last&quot;:&quot;6,
+        &quot;sleep&quot;:2,
+        &quot;cmd&quot;:[ [ &quot;comment&quot;, &quot;Iteration $iterate&quot; ] ]
+        }
+    ]
+}
+
+--&gt;
+RUN &quot;iterate&quot; - iteration 4
+COMMENT Iteration 4
+RUN &quot;iterate&quot; - iteration 5
+COMMENT Iteration 5
+RUN &quot;iterate&quot; - iteration 6
+COMMENT Iteration 6</code></pre>
+
+
+<p>In addition we can use variable substation. To do so simply create a new value
+inside conf.py and then reference it inside your json code</p>
+<pre class="codehilite"><code>[ &quot;drone&quot;, 1, &quot;cloudlogin&quot;, {&quot;user&quot;:&quot;$cloud_user&quot;, &quot;pass&quot;:&quot;$cloud_pass&quot;, &quot;host&quot;:&quot;$cloud_url&quot;}, 300 ]</code></pre>
+
+
+<h2 id="list-of-all-complex-calls">List of all complex calls<a class="headerlink" href="#list-of-all-complex-calls" title="Permanent link">&para;</a></h2>
+<p>Generally we use complex calls whenever we need to not just send data but wait
+for a status.</p>
+<pre class="codehilite"><code># set a static IP on drone 1
+[ &quot;static&quot;, 1, &quot;192.168.10.2&quot;, &quot;255.255.255.0&quot; ]
+
+# set essid of drone 1 to wifitest and wpa key to foobar
+[ &quot;essid&quot;, 1, &quot;wifitest&quot;, &quot;foobar&quot; ]
+
+# trigger drone 1
+[ &quot;dhcp&quot;, 1 ]
+
+# sleep 5 seconds
+[ &quot;sleep&quot;, 1 ]
+
+# fail is a test result inverter. it switces a result true&lt;-&gt;false
+[ &quot;fail&quot;, &quot;dhcp&quot;, 1 ]
+
+# this will trigger qa.py to print a comment in the log
+[ &quot;comment&quot;, &quot;foooooobar&quot; ]
+
+# this will cause drone 1 to try and ping a remote url
+[ &quot;ping&quot;, 1, &quot;192.168.10.1&quot; ]
+
+# this will check if the IP received in a dhcp reply received by drone 1
+# matches certain criterions.
+[ &quot;checkip&quot;, 1, &quot;192.168.10.&quot; ]</code></pre>
+
+
+<p>As netmasks are limited to 32 and or not always obvious which once are valid,
+we have 2 special complex calls to handle this. Netmasks are always indexed by
+an id rather than a absolute mask.</p>
+<pre class="codehilite"><code># this will set the netmask on drone 1 to Mask index #1
+[ &quot;setnetmask&quot;, 1 ]
+# this will check if the netmask received in a dhcp reply received by drone 1
+# matches certain criterions of Mask index #1
+[ &quot;checknetmask&quot;, 1 ]</code></pre>
+
+
+<p>Finally we have a complex call that we use as our entry point for RPC on a Drone</p>
+<pre class="codehilite"><code># send a drone RPC call to drone 1.
+[ &quot;drone&quot;, 1, &quot;webui_auth&quot;, {&quot;pass&quot;:&quot;admin&quot;}, 300 ],</code></pre>
+
+
+<h2 id="list-of-all-drone-calls">List of all drone calls<a class="headerlink" href="#list-of-all-drone-calls" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code># dns_flood - do mass dns resolving
+[ &quot;drone&quot;, 1, &quot;dns_flood&quot;, [&quot;www.google.de&quot;, &quot;www.google.com&quot;]
+
+# download - download a file and check its size
+[ &quot;drone&quot;, 1, &quot;download&quot;, {&quot;url&quot;:&quot;http://dev.phrozen.org/test&quot;, &quot;repeat&quot;:&quot;4&quot;, &quot;size&quot;:&quot;1048576&quot;}, 300 ]
+
+# fatserver - simulate a fatserver call - this requires a DUT with dev mode enabled
+[ &quot;drone&quot;, 1, &quot;fatserver&quot;, {&quot;host&quot;:&quot;192.168.10.1&quot;, &quot;payload&quot;:&quot;json|{\&quot;cmd\&quot;:\&quot;setwpapassword\&quot;, \&quot;val\&quot;:\&quot;12345321234\&quot; }&quot; } ]
+
+# cloudlogin - log into a cloudspot using http redirects
+[ &quot;drone&quot;, 1, &quot;cloudlogin&quot;, {&quot;user&quot;:&quot;$cloud_user&quot;, &quot;pass&quot;:&quot;$cloud_pass&quot;, &quot;host&quot;:&quot;$cloud_url&quot;}, 300 ]
+
+# cloudwispr - log into a cloudspot using wispr
+
+# cloudlogout - log of the cloud service
+[ &quot;drone&quot;, 1, &quot;cloudlogout&quot; ]
+
+# webui_auth - tell the drone to log into the DUTs webui
+[ &quot;drone&quot;, 1, &quot;webui_auth&quot;, {&quot;pass&quot;:&quot;admin&quot;}, 300 ]
+
+# webui_rpc - send a webui rpc call (these are identical to the ones used by the normal webui)
+[ &quot;drone&quot;, 1, &quot;webui_rpc&quot;, { &quot;set&quot;:&quot;passwd&quot;, &quot;vals&quot;:{&quot;passwd1&quot;:&quot;fooooooooo&quot; } } ],
+
+# webui_deauth - log off the webui
+[ &quot;drone&quot;, 1, &quot;webui_deauth&quot; ]
+
+# webui_ip - use a different webui ip than 192.168.10.1
+[ &quot;drone&quot;, 1, &quot;webui_ip&quot;, {&quot;ipaddr&quot;:&quot;169.254.255.1&quot;}, 300 ],
+
+# uci_dump - get
+[ &quot;drone&quot;, 1, &quot;uci_dump&quot;, {&quot;package&quot;:&quot;cloud&quot;, &quot;section&quot;:&quot;state&quot;, &quot;state&quot;:1 }, 300 ],</code></pre>
+
+
+<p>The following calls exist but are currently unused</p>
+<ul>
+<li>getifaddrs - get a list of all netdevs inclusive the ipaddr ...</li>
+<li>readfile - read a random file from the drones FS</li>
+<li>reset - reboot the drone</li>
+<li>sysinfo - get system resource usage</li>
+<li>system - execute a random system call on the drone</li>
+<li>uci_dump - get some use values</li>
+<li>uci_replace - uci magic</li>
+<li>upgrade - FW upgrade of the Drone</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2020-02-29 23:43:59
+-->

@@ -1,0 +1,4 @@
+---
+- ubus:
+    method: board
+    path: system

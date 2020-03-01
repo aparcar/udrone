@@ -89,9 +89,8 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#udrone-qa-done-right">udrone - QA done right</a></li>
-            <li><a href="#what-is-udrone">What is udrone</a></li>
-            <li><a href="#setup-guide">Setup Guide</a></li>
-            <li><a href="#how-do-i-run-a-test">How do I run a test</a></li>
+            <li><a href="#setup">Setup</a></li>
+            <li><a href="#run-tests">Run tests</a></li>
             <li><a href="#definition-of-test-cases">Definition of test cases</a></li>
             <li><a href="#using-iterations-and-substitution">Using iterations and substitution</a></li>
             <li><a href="#list-of-all-complex-calls">List of all complex calls</a></li>
@@ -101,61 +100,45 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="udrone-qa-done-right">udrone - QA done right<a class="headerlink" href="#udrone-qa-done-right" title="Permanent link">&para;</a></h1>
-<ul>
-<li>What is udrone</li>
-<li>Definition of test cases</li>
-<li>Using iterations and substitution</li>
-<li>List of all complex calls</li>
-<li>List of all drone calls</li>
-</ul>
-<h2 id="what-is-udrone">What is udrone<a class="headerlink" href="#what-is-udrone" title="Permanent link">&para;</a></h2>
 <p>Udrone is a system that allows you to remotely control <em>N</em> drones. The <em>N</em>
 drones can be sent a number of different commands. Based on these commands the
 drone will perform a number of actions and report the result back to the drone
 host controller. The system consists of a number of files on the controller
 side.</p>
 <ul>
-<li><code>udrone.py</code> - the core component. This code establishes a communication channel to the drone.</li>
+<li><code>udronerc.py</code> - the core component. This code establishes a communication channel to the drone.</li>
 <li><code>qa.py</code> - this is a wrapper for udrone.py that allows us to write test in json syntax and run them in a sane manner</li>
-<li><code>*.json</code> - this is a collection of predefined tests, that the drone can run</li>
+<li><code>*.yml</code> - this is a collection of predefined tests, that the drone can run</li>
 </ul>
-<h2 id="setup-guide">Setup Guide<a class="headerlink" href="#setup-guide" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Where do I get udrone</li>
-<li>How do I setup udrone software</li>
-<li>How do I setup udrone hardware</li>
-<li>How do I run a test</li>
-</ul>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<p>The following steps explain how to setup an <code>udrone</code> environment.</p>
 <h3 id="where-do-i-get-udrone">Where do I get udrone<a class="headerlink" href="#where-do-i-get-udrone" title="Permanent link">&para;</a></h3>
 <p>Checkout the latest version via the following command</p>
-<pre class="codehilite"><code>git clone https://github.com/blogic/udrone</code></pre>
+<pre class="codehilite"><code>$ git clone https://github.com/blogic/udrone</code></pre>
 
 
 <h3 id="how-do-i-setup-udrone-software">How do I setup udrone software<a class="headerlink" href="#how-do-i-setup-udrone-software" title="Permanent link">&para;</a></h3>
-<p>udrone is very easy to setup. All custom information is stored in a central
-file called conf.py</p>
-<pre class="codehilite"><code>$ cat conf.py
-conf = {
-    # the interface used to talk to the drones
-    ifname&quot;:&quot;eth0&quot;,
-}</code></pre>
+<p>udrone is easy to setup. All custom information is stored in a central
+file called <code>config.py</code></p>
+<pre class="codehilite"><code>$ cat config.py
+ifname:  eth0 # the interface used to talk to the drones</code></pre>
 
 
-<h3 id="how-do-i-setup-udrone-hardware">How do I setup udrone hardware<a class="headerlink" href="#how-do-i-setup-udrone-hardware" title="Permanent link">&para;</a></h3>
-<p>In addition to the DUT you will need N drones. A drone is a OpenWrt router with
-the udrone package installed. Once you have all devices, you need to set them
-up in 1 of the following ways.</p>
+<h3 id="hardware-setup">Hardware setup<a class="headerlink" href="#hardware-setup" title="Permanent link">&para;</a></h3>
+<p>In addition to the <em>device under testing</em> (DUT) you will need N drones. A drone
+is a OpenWrt router with the udrone package installed. Once you have all
+devices, you need to set them up in 1 of the following ways.</p>
 <pre class="codehilite"><code>LAPTOP (eth0) -&gt; (LAN) DRONE (WAN) -&gt; (LAN) DUT (WAN) -&gt; BACKEND
 LAPTOP (eth0) -&gt; (LAN) DRONE (WIFI) -&gt; (WIFI) DUT (WAN) -&gt; BACKEND</code></pre>
 
 
 <p>If you want to use more than just 1 Drone you will need to switches between
-LAPTOP/DRONE and DRONE/DUT.</p>
+<code>LAPTOP/DRONE</code> and <code>DRONE/DUT</code>.</p>
 <p>As a backend you will need, depending on the test: AP/PPPoE Server/DHCP/DNS/...</p>
-<h2 id="how-do-i-run-a-test">How do I run a test<a class="headerlink" href="#how-do-i-run-a-test" title="Permanent link">&para;</a></h2>
+<h2 id="run-tests">Run tests<a class="headerlink" href="#run-tests" title="Permanent link">&para;</a></h2>
 <p>The simplest test is the connectivity test. This will make the drone grab an
 IPV4 using DHCP from the DUT and wget <a href="http://openwrt.org/index.html">http://openwrt.org/index.html</a>.</p>
-<pre class="codehilite"><code>$ ./qa.py test/example.connectivity.json</code></pre>
+<pre class="codehilite"><code>$ ./qa.py test/connectivity.yml</code></pre>
 
 
 <p>Once all test are run, the qa tool will report back if the test passed or
@@ -489,5 +472,5 @@ an id rather than a absolute mask.</p>
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2020-02-29 23:44:43
+Build Date UTC : 2020-03-01 00:00:01
 -->

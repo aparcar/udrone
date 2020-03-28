@@ -1,0 +1,14 @@
+---
+- name: Test basic functions
+  drones: all
+  tests:
+    - iterate
+    - sysinfo
+    - system
+    - ubus
+    - ubus_bad_method
+    - ubus_bad_path
+    - uci_get
+    - uci_set
+
+

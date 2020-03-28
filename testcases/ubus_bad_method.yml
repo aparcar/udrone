@@ -1,0 +1,5 @@
+---
+- ubus:
+    method: unknown
+    path: system
+  must_fail: true

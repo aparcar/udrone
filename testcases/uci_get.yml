@@ -1,0 +1,4 @@
+---
+- uci_get:
+    config: network
+    section: lan

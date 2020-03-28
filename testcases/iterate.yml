@@ -1,0 +1,13 @@
+---
+- name: test local iterate
+  local_action:
+    module: comment
+    msg: "Iteration {{iterate}} {{iperf_server}}"
+  repeat: 4
+  sleep: 2
+
+- name: test drone iterate
+  comment:
+    msg: "iteration {{iterate}}"
+  repeat: 4
+  sleep: 2
